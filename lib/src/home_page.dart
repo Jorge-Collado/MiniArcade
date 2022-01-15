@@ -1,64 +1,101 @@
 import 'package:flutter/material.dart';
+import 'package:videojuegos/src/games/snake.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  PageController _controller = PageController(
+    initialPage: 0,
+  );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Components'),
-        backgroundColor: Theme.of(context).primaryColor,
+        title: Text('Mini arcade'),
       ),
-      body: ListView(
-        children: [
-          _cardBuilder(),
-          Card(
-            child: ListTile(
-              title: Text("Pokemon"),
-              trailing: Icon(Icons.arrow_right_outlined),
-            ),
-          ),
-          Card(
-            child: ListTile(
-              title: Text("Li o leyens"),
-              trailing: Icon(Icons.arrow_right_outlined),
-            ),
-          ),
-        ],
-        padding: const EdgeInsets.all(8),
+      body: PageView(
+        controller: _controller,
+        children: [_firstPage(context), _secondPage(context)],
       ),
     );
   }
 
-  Widget _cardBuilder() {
-    return Card(
-      child: Container(
-        padding: EdgeInsets.all(16),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Text(
-              'Dinosaur run',
-              style: TextStyle(
-                fontSize: 30,
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Image(
-                image: NetworkImage(
-                    'https://laverdadnoticias.com/__export/1626574579733/sites/laverdad/img/2021/07/17/dinosaurio_de_google_juego_final.jpg_478486366.jpg')),
-            TextButton(
-              onPressed: () {},
-              child: Text(
-                'Jugar',
-                style: TextStyle(color: Colors.black),
-              ),
-              style: TextButton.styleFrom(backgroundColor: Color(0xFFF9F871)),
-            )
-          ],
-        ),
-      ),
-    );
+  Widget _firstPage(BuildContext context) {
+    return Container(
+        decoration: BoxDecoration(
+            image: DecorationImage(
+          image: NetworkImage(
+              'https://www.wallpaperkiss.com/wimg/b/115-1157800_big.jpg'),
+          fit: BoxFit.cover,
+        )),
+        alignment: Alignment.center,
+        child: Container(
+          height: 370,
+          width: 275,
+          child: Column(
+            children: [
+              Card(
+                  child: Column(
+                children: [
+                  Image(
+                      image: NetworkImage(
+                          "https://img.poki.com/cdn-cgi/image/quality=78,width=600,height=600,fit=cover,g=0.5x0.5,f=auto/9afd3b92ab41ffca7f368a8fcbd6d39a75894efe0edbc14cf1f067cf625e6678.png")),
+                  Text(
+                    'Dinosaur run',
+                    style: TextStyle(fontSize: 22),
+                  )
+                ],
+              )),
+              SizedBox(
+                  width: 150,
+                  child: ElevatedButton(
+                    onPressed: () => {},
+                    child: Text('Jugar'),
+                    style: ButtonStyle(),
+                  ))
+            ],
+          ),
+        ));
+  }
+
+  Widget _secondPage(BuildContext context) {
+    return Container(
+        decoration: BoxDecoration(
+            image: DecorationImage(
+          image: NetworkImage(
+              'https://www.wallpaperkiss.com/wimg/b/115-1157800_big.jpg'),
+          fit: BoxFit.cover,
+        )),
+        alignment: Alignment.center,
+        child: Container(
+          height: 370,
+          width: 275,
+          child: Column(
+            children: [
+              Card(
+                  child: Column(
+                children: [
+                  Image(
+                      image: NetworkImage(
+                          "https://1z73q13h5gz932pdsz42u00q-wpengine.netdna-ssl.com/wp-content/uploads/2018/08/snake_game_NOKIA-640x353.jpg")),
+                  Text(
+                    'snake',
+                    style: TextStyle(fontSize: 22),
+                  )
+                ],
+              )),
+              SizedBox(
+                  width: 150,
+                  child: ElevatedButton(
+                    onPressed: () => {Navigator.pushNamed(context, 'snake')},
+                    child: Text('Jugar'),
+                    style: ButtonStyle(),
+                  ))
+            ],
+          ),
+        ));
   }
 }
