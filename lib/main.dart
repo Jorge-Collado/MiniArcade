@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:videojuegos/src/games/snake.dart';
+import 'package:videojuegos/src/utils/routes.dart';
 
 import 'src/home_page.dart';
 import 'src/utils/theme_data.dart';
@@ -14,13 +15,7 @@ class MyApp extends StatelessWidget {
         title: 'Components',
         home: HomePage(),
         theme: tema(),
-        routes: _getRoutes());
+        routes: getRoutes());
   } //u
 
-  Map<String, WidgetBuilder> _getRoutes() {
-    return <String, WidgetBuilder>{
-      'snake': (BuildContext context) => PlaySnake(),
-      'home': (BuildContext context) => HomePage(),
-    };
-  }
 }

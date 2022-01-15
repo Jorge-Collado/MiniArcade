@@ -103,7 +103,7 @@ class _PlaySnakeState extends State<PlaySnake> {
         builder: (BuildContext context) {
           return AlertDialog(
             title: Text('GAME OVER'),
-            content: Text('You\'re score: ${snakePosition.length.toString()}'),
+            content: Text('Your score: ${snakePosition.length.toString()}'),
             actions: <Widget>[
               FlatButton(
                   onPressed: () {

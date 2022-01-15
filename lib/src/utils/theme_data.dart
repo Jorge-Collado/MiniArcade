@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 ThemeData tema() {
   return ThemeData(
-    primaryColor: Color(0xFF7558A4),
-    cardColor: Color(0xFFBF5FA1),
-  );
+      primarySwatch: Colors.deepPurple,
+      cardColor: Colors.indigo,
+      textTheme: const TextTheme(bodyText2: TextStyle(color: Colors.white)));
 }

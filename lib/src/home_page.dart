@@ -14,11 +14,36 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Mini arcade'),
-      ),
+          title: Text('Mini arcade'),
+          backgroundColor: Theme.of(context).primaryColor,
+          actions: <Widget>[
+            IconButton(
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          content: Text(
+                              'Aplicación desarrollada por  \nJorge Collado, Alexis Estela y \nDavid Ballester'),
+                          actions: <Widget>[
+                            FlatButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text('Okay'))
+                          ],
+                        );
+                      });
+                },
+                icon: Icon(Icons.info))
+          ]),
       body: PageView(
         controller: _controller,
-        children: [_firstPage(context), _secondPage(context)],
+        children: [
+          _firstPage(context),
+          _secondPage(context),
+          _thirdPage(context)
+        ],
       ),
     );
   }
@@ -80,9 +105,47 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Image(
                       image: NetworkImage(
-                          "https://1z73q13h5gz932pdsz42u00q-wpengine.netdna-ssl.com/wp-content/uploads/2018/08/snake_game_NOKIA-640x353.jpg")),
+                          "https://i.pinimg.com/originals/6e/b2/0f/6eb20f00fdee5e62e74495e88cd3223a.jpg")),
                   Text(
                     'snake',
+                    style: TextStyle(fontSize: 22),
+                  )
+                ],
+              )),
+              SizedBox(
+                  width: 150,
+                  child: ElevatedButton(
+                    onPressed: () => {Navigator.pushNamed(context, 'snake')},
+                    child: Text('Jugar'),
+                    style: ButtonStyle(),
+                  ))
+            ],
+          ),
+        ));
+  }
+
+  Widget _thirdPage(BuildContext context) {
+    return Container(
+        decoration: BoxDecoration(
+            image: DecorationImage(
+          image: NetworkImage(
+              'https://www.wallpaperkiss.com/wimg/b/115-1157800_big.jpg'),
+          fit: BoxFit.cover,
+        )),
+        alignment: Alignment.center,
+        child: Container(
+          height: 370,
+          width: 275,
+          child: Column(
+            children: [
+              Card(
+                  child: Column(
+                children: [
+                  Image(
+                      image: NetworkImage(
+                          "https://esports.eldesmarque.com/wp-content/uploads/2019/09/LoL-1.jpg")),
+                  Text(
+                    'League of legends',
                     style: TextStyle(fontSize: 22),
                   )
                 ],
