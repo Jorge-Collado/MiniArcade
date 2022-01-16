@@ -4,7 +4,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 class DinoGame extends StatefulWidget {
-  const DinoGame({Key? key}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -27,11 +26,12 @@ class _HomePageState extends State<DinoGame> {
   // Varibles del salto
   double tiempoDeSalto = 0;
   double height = 0;
-  double gravedad = 9.8;
+  double gravedad = 10.2;
   double fuerzaDeSalto = 5;
 
   // Opciones de DinoGame
   bool juegoHaComenzado = false;
+  int milliseconds = 8;
   
   //Bloquea el doble salto y tambien evita que inicie muchos 
   //temporizadores en la aplicacion, ya que puede crashear la aplicacion
@@ -47,8 +47,8 @@ class _HomePageState extends State<DinoGame> {
       juegoHaComenzado = true;
     });
 
-    Timer.periodic(Duration(milliseconds: 10), (timer) {
-      // check for if dino hits barrier
+    Timer.periodic(Duration(milliseconds: milliseconds), (timer) {
+      // check for if dino hits cactus
       if (detectaColision()) {
         gameOver = true;
         timer.cancel();
@@ -57,6 +57,21 @@ class _HomePageState extends State<DinoGame> {
             highScore = score;
           }
         });
+      }
+
+      if (score > 5) {
+        milliseconds = 6;
+        gravedad = 11;
+      } else if (score > 10) {
+        milliseconds = 4;
+        gravedad = 12;
+      } else if (score > 15) {
+        milliseconds = 3;
+        gravedad = 13;
+      } else if (score > 20) {
+        gravedad = 15;
+      } else if (score > 30) {
+        gravedad = 20;
       }
 
       // loop barrier to keep the map going
@@ -71,16 +86,6 @@ class _HomePageState extends State<DinoGame> {
     });
   }
 
-  // update score
-  void updateScore() {
-    if (cactusX < dinoX && dinoPasaCactus == false) {
-      setState(() {
-        dinoPasaCactus = true;
-        score++;
-      });
-    }
-  }
-
   // loop barriers
   void loopCactus() {
     setState(() {
@@ -89,6 +94,16 @@ class _HomePageState extends State<DinoGame> {
         dinoPasaCactus = false;
       }
     });
+  }
+
+  // update score
+  void updateScore() {
+    if (cactusX < dinoX && dinoPasaCactus == false) {
+      setState(() {
+        dinoPasaCactus = true;
+        score++;
+      });
+    }
   }
 
   // barrier collision detection
@@ -105,7 +120,7 @@ class _HomePageState extends State<DinoGame> {
   // dino jump
   void salto() {
     dobleSalto = true;
-    Timer.periodic(Duration(milliseconds: 10), (timer) {
+    Timer.periodic(Duration(milliseconds: milliseconds), (timer) {
       height = -gravedad / 2 * tiempoDeSalto * tiempoDeSalto + fuerzaDeSalto * tiempoDeSalto;
 
       setState(() {
@@ -141,6 +156,8 @@ class _HomePageState extends State<DinoGame> {
       score = 0;
       dinoY = 1;
       dobleSalto = false;
+      milliseconds = 8;
+      gravedad = 10.2;
     });
   }
 
@@ -156,43 +173,41 @@ class _HomePageState extends State<DinoGame> {
           children: [
             Expanded(
               flex: 2,
-              child: Container(
-                child: Center(
-                  child: Stack(
-                    children: [
-                      // tap to play
-                      TapToPlay(
-                        juegoHaComenzado: juegoHaComenzado,
-                      ),
+              child: Center(
+                child: Stack(
+                  children: [
+                    // tap to play
+                    TapToPlay(
+                      juegoHaComenzado: juegoHaComenzado,
+                    ),
 
-                      // game over screen
-                      GameOver(
-                        gameOver: gameOver,
-                      ),
+                    // game over screen
+                    GameOver(
+                      gameOver: gameOver,
+                    ),
 
-                      // scores
-                      Score(
-                        score: score,
-                        highScore: highScore,
-                      ),
+                    // scores
+                    Score(
+                      score: score,
+                      highScore: highScore,
+                    ),
 
-                      // dino
-                      Dino(
-                        dinoX: dinoX,
-                        dinoY: dinoY - dinoHeight,
-                        dinoWidth: dinoWidth,
-                        dinoHeight: dinoHeight,
-                      ),
+                    // dino
+                    Dino(
+                      dinoX: dinoX,
+                      dinoY: dinoY - dinoHeight,
+                      dinoWidth: dinoWidth,
+                      dinoHeight: dinoHeight,
+                    ),
 
-                      // barrier
-                      Cactus(
-                        cactusX: cactusX,
-                        cactusY: cactusY - cactusHeight,
-                        cactusWidth: cactusWidth,
-                        cactusHeight: cactusHeight,
-                      ),
-                    ],
-                  ),
+                    // barrier
+                    Cactus(
+                      cactusX: cactusX,
+                      cactusY: cactusY - cactusHeight,
+                      cactusWidth: cactusWidth,
+                      cactusHeight: cactusHeight,
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -303,7 +318,7 @@ class Score extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(15),
+      padding: const EdgeInsets.all(35),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
