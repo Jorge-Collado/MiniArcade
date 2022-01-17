@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "D:\\Importante\\Documentos\\MEGA\\AAA_GradoSuperior\\2n_Curso\\2n_Trimestre\\Programacio multimedia i dispositius mobils\\LosVideojuegos\\build\\app\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-ur\\values-ur.xml",
+            "outputFile": "Z:\\VS\\Alexis\\build\\app\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-ur\\values-ur.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Ballesito\\.gradle\\caches\\transforms-2\\files-2.1\\2e94107f30f39be366a17347c2bf100b\\core-1.1.0\\res\\values-ur\\values-ur.xml",
+                    "source": "C:\\Users\\alexi\\.gradle\\caches\\transforms-2\\files-2.1\\2e94107f30f39be366a17347c2bf100b\\core-1.1.0\\res\\values-ur\\values-ur.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

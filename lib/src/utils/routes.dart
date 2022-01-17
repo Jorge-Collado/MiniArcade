@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:videojuegos/src/games/LoL.dart';
 import 'package:videojuegos/src/games/dinoGame.dart';
 import 'package:videojuegos/src/games/infoDino.dart';
 import 'package:videojuegos/src/games/snake.dart';
@@ -10,5 +11,6 @@ Map<String, WidgetBuilder> getRoutes() {
     'home': (BuildContext context) => HomePage(),
     'infoDino': (BuildContext context) => infoDino(),
     'dinoGame': (BuildContext context) => DinoGame(),
+    'lol': (BuildContext context) => League(),
   };
 }
