@@ -101,7 +101,7 @@ class _HomePageState extends State<DinoGame> {
     if (cactusX < dinoX && dinoPasaCactus == false) {
       setState(() {
         dinoPasaCactus = true;
-        score++;
+        ++score;
       });
     }
   }

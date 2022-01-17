@@ -1,4 +1,4 @@
-#Mon Jan 17 05:59:28 CET 2022
-base.0=Z\:\\VS\\Alexis\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
+#Mon Jan 17 19:44:29 CET 2022
+base.0=C\:\\Users\\Alumne\\Desktop\\MiniArcade\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
 renamed.0=classes.dex
 path.0=classes.dex

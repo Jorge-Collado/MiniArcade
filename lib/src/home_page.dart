@@ -1,5 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:videojuegos/src/games/snake.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+
+/*SmoothPageIndicator(
+                controller: controller,
+                count: pages.length,
+                effect: WormEffect(
+                  dotHeight: 16,
+                  dotWidth: 16,
+                  type: WormType.thin,
+                  // strokeWidth: 5,
+                ),*/
 
 class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
@@ -42,7 +53,7 @@ class _HomePageState extends State<HomePage> {
         children: [
           _firstPage(context),
           _secondPage(context),
-          _thirdPage(context)
+          _thirdPage(context),
         ],
       ),
     );
@@ -76,11 +87,27 @@ class _HomePageState extends State<HomePage> {
               )),
               SizedBox(
                   width: 150,
+                  height: 35,
                   child: ElevatedButton(
                     onPressed: () => {Navigator.pushNamed(context, 'dinoGame')},
                     child: Text('Jugar'),
                     style: ButtonStyle(),
-                  ))
+                  )),
+                  Padding(padding: EdgeInsets.all(8)), 
+              SizedBox(
+                height: 10,
+                child: SmoothPageIndicator(
+                  controller: _controller,
+                  count: 3,
+                  effect: WormEffect(
+                    dotHeight: 16,
+                    dotWidth: 16,
+                    dotColor: Colors.yellow,
+                    type: WormType.thin,
+                    // strokeWidth: 5,
+                  ),
+                ),
+              )
             ],
           ),
         ));

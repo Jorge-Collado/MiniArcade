@@ -12,6 +12,7 @@ class PlaySnake extends StatefulWidget {
 class _PlaySnakeState extends State<PlaySnake> {
   static List<int> snakePosition = [45, 65, 85, 105, 125];
   int numberOfSquares = 760;
+  int speed = 100;
 
   static var randomNumber = Random();
   int food = randomNumber.nextInt(700);
@@ -21,12 +22,14 @@ class _PlaySnakeState extends State<PlaySnake> {
 
   void startGame() {
     snakePosition = [45, 65, 85, 105, 125];
-    const duration = const Duration(milliseconds: 300);
+    var duration =  Duration(milliseconds: speed);
     Timer.periodic(duration, (Timer timer) {
       updateSnake();
       if (gameOver()) {
         timer.cancel();
         _showGameOverScreen();
+        startGame();
+        speed = 100;
       }
     });
   }
