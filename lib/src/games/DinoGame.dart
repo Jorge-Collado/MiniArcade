@@ -24,80 +24,66 @@ class _HomePageState extends State<DinoGame> {
   double cactusHeight = 0.4;
 
   // Varibles del salto
-  double tiempoDeSalto = 0;
+  double tiempo = 0;
   double height = 0;
-  double gravedad = 10.2;
+  double gravedad = 12.6;
   double fuerzaDeSalto = 5;
 
   // Opciones de DinoGame
+  //bool que se usa para saber si el juego ha comenzado.
   bool juegoHaComenzado = false;
-  int milliseconds = 8;
-  
-  //Bloquea el doble salto y tambien evita que inicie muchos 
-  //temporizadores en la aplicacion, ya que puede crashear la aplicacion
+  int milliseconds = 4;
+  //El bool dobleSalto bloquea el doble salto y tambien evita que inicie muchos 
+  //temporizadores en la aplicacion al saltar y le das de nuevo a saltar, ya que 
+  //puede crashear la aplicacion
   bool dobleSalto = false;
+  //bool que se usa para saber si el juego ha terminado.
   bool gameOver = false;
   int score = 0;
   int highScore = 0;
+  //bool que se usa para saber si el dinosaurio ha pasado el cactus.
   bool dinoPasaCactus = false;
 
-  // this will make the map start moving, ie. barriers will start to move
+  // Metodo para comenzar DinoGame
   void startGame() {
+    //Hace set del bool a true indicando que se inicia el juego.
     setState(() {
       juegoHaComenzado = true;
     });
 
+    //A partir de los milliseconds que pongas, ira mirando todo lo que hay dentro.
     Timer.periodic(Duration(milliseconds: milliseconds), (timer) {
-      // check for if dino hits cactus
+      //Mira si el dinosaurio ha tocado el cactus.
       if (detectaColision()) {
+        //Si es asi, se para el juego, te dice Game Over y mira si la puntuacion 
+        //que ha hecho es mayor a la mejor puntuacion que hay.
         gameOver = true;
         timer.cancel();
         setState(() {
           if (score > highScore) {
+            //Si es asi, actualiza la mejor puntuacion con la puntuacion obtenida.
             highScore = score;
           }
         });
       }
 
-      if (score > 5) {
-        milliseconds = 6;
-        gravedad = 11;
-      } else if (score > 10) {
-        milliseconds = 4;
-        gravedad = 12;
-      } else if (score > 15) {
-        milliseconds = 3;
-        gravedad = 13;
-      } else if (score > 20) {
-        gravedad = 15;
-      } else if (score > 30) {
-        gravedad = 20;
-      }
-
-      // loop barrier to keep the map going
+      // Llamada al metodo del bucle que hace el cactus.
       loopCactus();
 
-      // update score
+      // Llamada al metodo para actualizar la puntuacion.
       updateScore();
 
+      // Hace que el cactus se vaya moviendo de derecha a izquierda todo el rato.
       setState(() {
         cactusX -= 0.01;
       });
     });
   }
 
-  // loop barriers
-  void loopCactus() {
-    setState(() {
-      if (cactusX <= -1.2) {
-        cactusX = 1.2;
-        dinoPasaCactus = false;
-      }
-    });
-  }
-
-  // update score
+  // Actualizar puntuacion.
   void updateScore() {
+    //Si el cactus ya esta detras del dinosaurio y el bool de dinoPasaCactus esta en false, 
+    //pone el bool a true y actualiza la puntuacion.
     if (cactusX < dinoX && dinoPasaCactus == false) {
       setState(() {
         dinoPasaCactus = true;
@@ -106,22 +92,42 @@ class _HomePageState extends State<DinoGame> {
     }
   }
 
-  // barrier collision detection
+  // Bucle del cactus.
+  void loopCactus() {
+    setState(() {
+      //Si el cactus ya ha hecho su recorrido de derecha a izquierda y sale de la pantalla,
+      //el cactus se ira de nuevo a la derecha para hacer el mismo recorrido de nuevo y pone
+      //el bool dinoPasaCactus a false de nuevo.
+      if (cactusX <= -1.2) {
+        cactusX = 1.2;
+        dinoPasaCactus = false;
+      }
+    });
+  }
+
+  // bool para mirar si ha habiado una colision del dinosaurio con el cactus.
   bool detectaColision() {
+    //Mira si ha tocado el dinosaurio el cactus.
     if (cactusX <= dinoX + dinoWidth &&
         cactusX + cactusWidth >= dinoX &&
         dinoY >= cactusY - cactusHeight) {
+      //Si ha habido colision, da true.
       return true;
     }
 
+    //Si no hay colision, da false.
     return false;
   }
 
-  // dino jump
+  // Salto del dinosaurio.
   void salto() {
+    //Se pone el bool a true.
     dobleSalto = true;
+
+    //A partir de los milliseconds que pongas, ira mirando todo lo que hay dentro.
     Timer.periodic(Duration(milliseconds: milliseconds), (timer) {
-      height = -gravedad / 2 * tiempoDeSalto * tiempoDeSalto + fuerzaDeSalto * tiempoDeSalto;
+      //El peso del dinosaurio.
+      height = -gravedad / 2 * tiempo * tiempo + fuerzaDeSalto * tiempo;
 
       setState(() {
         if (1 - height > 1) {
@@ -133,31 +139,33 @@ class _HomePageState extends State<DinoGame> {
         }
       });
 
-      // check if dead
+      //Mira el bool gameOver
       if (gameOver) {
         timer.cancel();
       }
 
-      // keep the time going
-      tiempoDeSalto += 0.01;
+      //Sube el tiempo.
+      tiempo += 0.01;
     });
   }
 
   void resetJump() {
+    //Pone el bool dobleSalto a false y hace reset al tiempo cuando ha tocado el suelo.
     dobleSalto = false;
-    tiempoDeSalto = 0;
+    tiempo = 0;
   }
 
+  //Metodo para volver a jugar.
   void jugarOtraVez() {
     setState(() {
+      //Hace reset de todas las variables para que al comenzar de nuevo la partida este
+      //todo donde y como estaba al principio.
       gameOver = false;
       juegoHaComenzado = false;
       cactusX = 1.2;
       score = 0;
       dinoY = 1;
       dobleSalto = false;
-      milliseconds = 8;
-      gravedad = 10.2;
     });
   }
 
@@ -174,25 +182,26 @@ class _HomePageState extends State<DinoGame> {
             Expanded(
               flex: 2,
               child: Center(
+                //Para superponer widgets uno encima de otro.
                 child: Stack(
                   children: [
-                    // tap to play
+                    // Llamada a la clase TapToPlay
                     TapToPlay(
                       juegoHaComenzado: juegoHaComenzado,
                     ),
 
-                    // game over screen
+                    // Llamada a la clase GameOver
                     GameOver(
                       gameOver: gameOver,
                     ),
 
-                    // scores
+                    // Llamada a la clase Score
                     Score(
                       score: score,
                       highScore: highScore,
                     ),
 
-                    // dino
+                    // Llamada a la clase Dino
                     Dino(
                       dinoX: dinoX,
                       dinoY: dinoY - dinoHeight,
@@ -200,7 +209,7 @@ class _HomePageState extends State<DinoGame> {
                       dinoHeight: dinoHeight,
                     ),
 
-                    // barrier
+                    // Llamada a la clase Cactus
                     Cactus(
                       cactusX: cactusX,
                       cactusY: cactusY - cactusHeight,
@@ -232,6 +241,8 @@ class _HomePageState extends State<DinoGame> {
   }
 }
 
+//Lo que hay en los containers es lo que va a aparecer la primera vez que abras el juego,
+//cuando le des tap desaparece y comienza el juego.
 class TapToPlay extends StatelessWidget {
   
   final bool juegoHaComenzado;
@@ -271,6 +282,9 @@ class TapToPlay extends StatelessWidget {
   
 }
 
+//Aparece cuando se ha terminado el juego y dice que si quieres volver
+//a jugar que solo le des tap, a la que le des se quita y vuelve a comenzar
+//el juego.
 class GameOver extends StatelessWidget {
   
   bool gameOver;
@@ -308,6 +322,7 @@ class GameOver extends StatelessWidget {
   }
 }
 
+//Esta siempre en la parte de arriba del juego y es la puntuacion.
 class Score extends StatelessWidget {
   
   final score;
@@ -364,6 +379,7 @@ class Score extends StatelessWidget {
   }
 }
 
+//Es el dinosario.
 class Dino extends StatelessWidget {
   
   final double dinoX;
@@ -389,6 +405,7 @@ class Dino extends StatelessWidget {
   }
 }
 
+//Es el cactus.
 class Cactus extends StatelessWidget {
   
   final double cactusX;

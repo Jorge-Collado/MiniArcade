@@ -1,4 +1,4 @@
-#Mon Jan 17 19:44:29 CET 2022
-base.0=C\:\\Users\\Alumne\\Desktop\\MiniArcade\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
+#Thu Jan 20 01:52:27 CET 2022
+base.0=D\:\\Importante\\Documentos\\MEGA\\AAA_GradoSuperior\\2n_Curso\\2n_Trimestre\\Programacio multimedia i dispositius mobils\\as\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
 renamed.0=classes.dex
 path.0=classes.dex
